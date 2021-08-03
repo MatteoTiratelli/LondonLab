@@ -1,10 +1,23 @@
 library(tidyverse)
 
-setwd("/Users/matteo/Downloads/London Lab/")
+theme_base <- function (base_family = "sans", panel_border = element_rect(fill = NA, colour = "grey20")) {
+  theme_bw(base_family = base_family) +
+    theme(
+      panel.border = panel_border,
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      plot.title.position = "plot",
+      plot.caption.position = "plot",
+      plot.caption = element_text(hjust = 0, vjust = -1),
+      panel.background = element_blank(),
+      plot.background = element_blank(),
+      legend.background= element_blank(),
+      legend.box.background = element_blank(),
+      strip.background = element_blank())}
 
 #######################
 
-LondonJobs <- read_csv("London sectoral employment.csv")
+LondonJobs <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/London%20sectoral%20employment.csv")
 
 LondonJobs %>%
   mutate(across(-c(Year,Total),
@@ -50,7 +63,7 @@ ggplot(LondonPop, aes(x = name, y = value, colour = `Area Name`)) +
 
 #######################
 
-Homicide <- read_csv('England and Wales Homicides.csv')
+Homicide <- read_csv('https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/England%20and%20Wales%20Homicides.csv')
 
 ggplot(Homicide, aes(x = Year, y = Homicides)) +
   geom_col(colour = 'black', fill = 'grey80') + 
@@ -71,7 +84,7 @@ ggplot(HomicideRates, aes(x = reorder(City, Order), y = Rate)) +
   
 #######################
 
-data <- read_csv("CCTV.csv")
+data <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/CCTV.csv")
 
 data$CCTVpermile <- na_if(data$CCTVpermile, "N/A")
 data$CCTVpermile <- as.numeric(data$CCTVpermile)
