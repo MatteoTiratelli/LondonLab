@@ -34,9 +34,10 @@ rm(temp)
 
 LondonJobs <- pivot_longer(LondonJobs, -Year)
 
-ggplot(LondonJobs[LondonJobs$Year<2018,], aes(x = Year, y = value, colour = name)) +
+ggplot(LondonJobs[LondonJobs$Year<2018 & !(LondonJobs$name %in% c('Primary','Transportation')),], aes(x = Year, y = value, colour = name)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'Sectoral employment shares in London, 1971 - 2017 (GLA Economics)') +
+  labs(title = 'Sectoral employment shares in London, 1971 - 2017', caption = 'Source: GLA Economics Data') +
+  scale_y_continuous(breaks = c(0.2, 0.4, 0.6), labels = c('20%','40%','60%')) +
   theme_base() +
   theme(legend.position = "bottom", legend.title = element_blank())
 
@@ -56,10 +57,22 @@ LondonPop$name <- as.numeric(LondonPop$name)
 
 ggplot(LondonPop, aes(x = name, y = value, colour = `Area Name`)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'The population of London, 1600 - 2011') +
+  labs(title = 'The population of London, 1800 - 2011', caption = 'Source: UK Census Data') +
   scale_y_continuous(labels = scales::comma) +
   theme_base() +
   theme(legend.position = "bottom", legend.title = element_blank())
+
+
+#######################
+
+ForeignBorn <- tibble(Year = c(1851, 1881, 1911, 1951, 1981, 1991, 2001, 2011),
+                      count = c(7, 5, 6, 8, 24, 27, 27, 36))
+
+ggplot(ForeignBorn, aes(x = Year, y = count)) +
+  geom_line() + xlab(NULL) + ylab(NULL) +
+  labs(title = 'Percentage of Londoners who were born outside of Britain, 1951 - 2011', caption = 'Source: Historic UK Census Data') +
+  scale_y_continuous(limits = c(0,50), breaks = c(10,20,30,40,50), labels = c('10%','20%','30%', '40%', '50%')) +
+  theme_base()
 
 #######################
 
