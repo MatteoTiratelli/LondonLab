@@ -70,7 +70,7 @@ ForeignBorn <- tibble(Year = c(1851, 1881, 1911, 1951, 1981, 1991, 2001, 2011),
 
 ggplot(ForeignBorn, aes(x = Year, y = count)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'Percentage of Londoners who were born outside of Britain, 1951 - 2011', caption = 'Source: Historic UK Census Data') +
+  labs(title = 'Percentage of Londoners who were born outside of Britain, 1851 - 2011', caption = 'Source: UK Census Data') +
   scale_y_continuous(limits = c(0,50), breaks = c(10,20,30,40,50), labels = c('10%','20%','30%', '40%', '50%')) +
   theme_base()
 
