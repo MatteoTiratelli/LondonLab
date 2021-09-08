@@ -57,7 +57,7 @@ LondonPop$name <- as.numeric(LondonPop$name)
 
 ggplot(LondonPop, aes(x = name, y = value, colour = `Area Name`)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'The population of London, 1800 - 2011', caption = 'Source: UK Census Data') +
+  labs(title = 'The population of London, 1800 - 2011', caption = 'Source: UK Census Data, accessed through https://data.london.gov.uk') +
   scale_y_continuous(labels = scales::comma) +
   theme_base() +
   theme(legend.position = "bottom", legend.title = element_blank())
@@ -66,11 +66,11 @@ ggplot(LondonPop, aes(x = name, y = value, colour = `Area Name`)) +
 #######################
 
 ForeignBorn <- tibble(Year = c(1851, 1881, 1911, 1951, 1981, 1991, 2001, 2011),
-                      count = c(7, 5, 6, 8, 24, 27, 27, 36))
+                      count = c(9.558497847, 7.427176726, 10.412179132, 8, 24, 27, 27, 36))
 
 ggplot(ForeignBorn, aes(x = Year, y = count)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'Percentage of Londoners who were born outside of Britain, 1851 - 2011', caption = 'Source: UK Census Data') +
+  labs(title = 'Percentage of Londoners who were born outside of Britain, 1851 - 2011', caption = 'Source: UK Census Data, accessed through I-CeM') +
   scale_y_continuous(limits = c(0,50), breaks = c(10,20,30,40,50), labels = c('10%','20%','30%', '40%', '50%')) +
   theme_base()
 
@@ -84,14 +84,20 @@ ggplot(Homicide, aes(x = Year, y = Homicides)) +
   labs(title = 'Homicides in England and Wales, 1969 - 2020') +
   theme_base()
 
-HomicideRates <- tibble(City = c('London in 1340', 'London', 'New York', 'Los Angeles', 'Chicago'),
-                        Order = c(5,1,2,3,4),
-                        Rate = c(20, 1.6, 3.4, 7.0, 24.1))
+ggplot(Homicide, aes(x = Year, y = `Homicide rate`)) +
+  geom_line(colour = 'black') + 
+  xlab(NULL) + ylab(NULL) +
+  labs(title = 'Homicides per million population in England and Wales, 1969 - 2020') +
+  theme_base()
+
+HomicideRates <- tibble(City = c('London in 1340', 'Rome 2016', 'London 2020', 'Berlin 2016', 'Paris 2016', 'New York 2021', 'Chicago 2021'),
+                        Order = c(7,1,2,3,4,5,6),
+                        Rate = c(20, 0.7, 1.45, 1.4, 1.9, 5.91, 29.1))
 
 ggplot(HomicideRates, aes(x = reorder(City, Order), y = Rate)) +
   geom_col(colour = 'black', fill = 'grey80') + 
   ylab(NULL) + xlab(NULL) +
-  scale_y_continuous(breaks = c(0,5,10,15,20)) +
+  scale_y_continuous(breaks = c(0,5,10,15,20,25,30)) +
   labs(title = 'Homicide rates per 100,000 people') +
   theme_base()
   
