@@ -1,4 +1,6 @@
 library(tidyverse)
+library(viridis)
+library(gridExtra)
 
 theme_base <- function (base_family = "sans", panel_border = element_rect(fill = NA, colour = "grey20")) {
   theme_bw(base_family = base_family) +
@@ -144,3 +146,71 @@ ggplot(datab, aes(x = reorder(City, CCTVperperson), y = CCTVperperson)) +
   coord_flip() + theme_base(panel_border = element_blank()) + 
   theme(legend.position = "none", axis.text.y = element_text(colour = b),
         axis.ticks = element_blank())
+
+#######################
+
+PoliceUSA1 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other', 'Violent crime'),
+                        value = c(37,15,15,14,10,6,4))
+PoliceUSA1$place <- 'New Orleans'
+PoliceUSA2 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other','Violent crime'),
+                     value = c(37,13,19,12,7,8,4))
+PoliceUSA2$place <- 'Montgomery County'
+PoliceUSA3 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other','Violent crime'),
+                     value = c(32,19,7,12,18,9,4))
+PoliceUSA3$place <- 'Sacramento'
+PoliceUSA <- bind_rows(PoliceUSA1, PoliceUSA2, PoliceUSA3)
+PoliceUSA$series <- 'NYT, 2020 (Police data)'
+
+PoliceUSA$category <- fct_relevel(as.factor(PoliceUSA$category), 'Property crime','Violent crime','Other crime','Proactive','Traffic','Medical or other','Responding to noncriminal calls')
+
+ggplot(PoliceUSA, aes(fill = category, x = place, y = value)) + 
+  geom_bar(position="stack", stat="identity") + 
+  scale_fill_viridis(discrete=TRUE) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'New York Times, 2020 (Police data)') +
+  theme(legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5))
+ggsave(filename = "/Users/matteo/Downloads/Figure_1.png", device='png',
+         dpi = 300, bg = "transparent",
+         width=6, height=3)
+
+PoliceUK <- tibble(category = c('Community work', 'Dealing with incidents','Post incident work','Admin','Travel','Other activities','Briefing/meetings','Custody'),
+                   value = c(20,18,6,27,9,9,5,3))
+PoliceUK$place <- 'England and Wales'
+PoliceUK$series <- 'UK, 2010 (Observation)'
+
+PoliceUK$category <- fct_relevel(as.factor(PoliceUK$category), 'Dealing with incidents', 'Post incident work', 'Custody', 'Community work','Briefing/meetings','Admin','Travel','Other activities')
+
+ggplot(PoliceUK, aes(fill = category, x = place, y = value)) + 
+  geom_bar(position="stack", stat="identity") + 
+  scale_fill_viridis(discrete=TRUE) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'NPIA, 2010 (Direct observation)') +
+  theme(legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5))
+ggsave(filename = "/Users/matteo/Downloads/Figure_2.png", device='png',
+         dpi = 300, bg = "transparent",
+         width=3, height=3)
+
+PoliceAA1 <- tibble(category = c('Reducing crime','Investigating crime','Promoting public security','Providing assistance'),
+                   value = c(7,44,25,24))
+PoliceAA1$place <- 'Merseyside'
+PoliceAA2 <- tibble(category = c('Reducing crime','Investigating crime','Promoting public security','Providing assistance'),
+                    value = c(5,49,16,30))
+PoliceAA2$place <- 'West Yorshire'
+PoliceAA3 <- tibble(category = c('Reducing crime','Investigating crime','Promoting public security','Providing assistance'),
+                    value = c(4,40,32,24))
+PoliceAA3$place <- 'Met Police'
+PoliceAA <- bind_rows(PoliceAA1, PoliceAA2, PoliceAA3)
+PoliceAA$series <- 'Home Office, 2007 (Activity analysis survey)'
+
+PoliceAA$category <- fct_relevel(as.factor(PoliceAA$category), 'Investigating crime','Reducing crime','Providing assistance','Promoting public security')
+
+ggplot(PoliceAA, aes(fill = category, x = place, y = value)) + 
+  geom_bar(position="stack", stat="identity") + 
+  scale_fill_viridis(discrete=TRUE) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Home Office, 2007 (Activity analysis survey)') +
+  theme(legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5))
+ggsave(filename = "/Users/matteo/Downloads/Figure_3.png", device='png',
+         dpi = 300, bg = "transparent",
+         width=6, height=3)
+
