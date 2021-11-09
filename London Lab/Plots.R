@@ -1,6 +1,5 @@
 library(tidyverse)
 library(viridis)
-library(gridExtra)
 
 theme_base <- function (base_family = "sans", panel_border = element_rect(fill = NA, colour = "grey20")) {
   theme_bw(base_family = base_family) +
@@ -153,7 +152,7 @@ PoliceUSA1 <- tibble(category = c('Responding to noncriminal calls','Traffic','O
                         value = c(37,15,15,14,10,6,4))
 PoliceUSA1$place <- 'New Orleans'
 PoliceUSA2 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other','Violent crime'),
-                     value = c(37,13,19,12,7,8,4))
+                     value = c(38,13,19,12,7,8,4))
 PoliceUSA2$place <- 'Montgomery County'
 PoliceUSA3 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other','Violent crime'),
                      value = c(32,19,7,12,18,9,4))
@@ -188,7 +187,7 @@ ggplot(PoliceUK, aes(fill = category, x = place, y = value)) +
         plot.title = element_text(hjust = 0.5))
 ggsave(filename = "/Users/matteo/Downloads/Figure_2.png", device='png',
          dpi = 300, bg = "transparent",
-         width=3, height=3)
+         width=4, height=3)
 
 PoliceAA1 <- tibble(category = c('Reducing crime','Investigating crime','Promoting public security','Providing assistance'),
                    value = c(7,44,25,24))
