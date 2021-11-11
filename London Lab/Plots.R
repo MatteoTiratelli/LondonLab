@@ -234,3 +234,22 @@ ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
        dpi = 300, bg = "transparent",
        width=6, height=3)
 
+Police <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/Police%20numbers.csv")
+
+ggplot(Police[Police$Year>1900,], aes(x = Year, y = Police)) +
+  geom_line(aes(x = Year, y = Police), colour = 'blue') +
+  scale_y_continuous(labels = scales::comma) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Police officers in England and Wales')
+ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
+       dpi = 300, bg = "transparent",
+       width=6, height=3)
+
+Crime <- read_csv("/Users/matteo/Downloads/Crime.csv")
+
+ggplot(Crime, aes(x = Year, y = CSEW)) +
+  geom_line(colour = 'blue') +
+  scale_y_continuous(labels = scales::comma) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Estimated number of crimes (CSEW)')
+ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
+       dpi = 300, bg = "transparent",
+       width=6, height=3)
