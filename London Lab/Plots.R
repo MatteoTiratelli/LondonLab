@@ -86,9 +86,9 @@ ggplot(Homicide, aes(x = Year, y = Homicides)) +
   theme_base()
 
 ggplot(Homicide, aes(x = Year, y = `Homicide rate`)) +
-  geom_line(colour = 'black') + 
+  geom_smooth(colour = 'blue', se = FALSE) + 
   xlab(NULL) + ylab(NULL) +
-  labs(title = 'Homicides per million population in England and Wales, 1969 - 2020') +
+  labs(title = 'Homicides per 1,000,000 people in England and Wales (smoothed)') +
   theme_base()
 
 HomicideRates <- tibble(City = c('London in 1340', 'Rome 2016', 'London 2020', 'Berlin 2016', 'Paris 2016', 'New York 2021', 'Chicago 2021'),
@@ -244,10 +244,11 @@ ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
        dpi = 300, bg = "transparent",
        width=6, height=3)
 
-Crime <- read_csv("/Users/matteo/Downloads/Crime.csv")
+Crime <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/Crime.csv")
 
 ggplot(Crime, aes(x = Year, y = CSEW)) +
   geom_line(colour = 'blue') +
+  scale_x_continuous(limits = c(1969,2020)) +
   scale_y_continuous(labels = scales::comma) +
   xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Estimated number of crimes (CSEW)')
 ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
