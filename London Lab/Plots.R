@@ -213,3 +213,24 @@ ggsave(filename = "/Users/matteo/Downloads/Figure_3.png", device='png',
          dpi = 300, bg = "transparent",
          width=6, height=3)
 
+
+################
+
+Prisons <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/Prison%20pop.csv", skip=1)
+
+ggplot(Prisons, aes(x = Year, y = Total)) +
+  geom_line(colour = 'blue') +
+  scale_x_continuous(limits = c(1900,2020), breaks = seq(1900,2020,20)) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Total prison population in England and Wales')
+ggsave(filename = "/Users/matteo/Downloads/Figure_4.png", device='png',
+       dpi = 300, bg = "transparent",
+       width=6, height=3)
+  
+ggplot(Prisons[!is.na(Prisons$Per100000),], aes(x = Year, y = Per100000)) +
+  geom_line(colour = 'blue') +
+  scale_x_continuous(limits = c(1900,2020), breaks = seq(1900,2020,20)) +
+  xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Prisoners per 100,000 people in England and Wales')
+ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
+       dpi = 300, bg = "transparent",
+       width=6, height=3)
+
