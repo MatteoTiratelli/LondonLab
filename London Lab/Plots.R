@@ -235,10 +235,17 @@ ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
        width=6, height=3)
 
 Police <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/Police%20numbers.csv")
+labels <- tibble(x = c(1949,2013),
+                 y = c(74000,90000),
+                 label = c("<= # Officers","Officers per 100,000 =>"),
+                 colour = c('blue','black'))
 
-ggplot(Police[Police$Year>1900,], aes(x = Year, y = Police)) +
+ggplot(Police[Police$Year>1900,]) +
   geom_line(aes(x = Year, y = Police), colour = 'blue') +
-  scale_y_continuous(labels = scales::comma) +
+  geom_line(aes(x = Year, y = Rate*500), colour = 'black') +
+  scale_y_continuous(labels = scales::comma, name = NULL,
+                     sec.axis = sec_axis( trans=~./500, name=NULL)) +
+  geom_text(data = labels, aes(x = x, y = y, label = label), colour = labels$colour, size = 3) +
   xlab(NULL) + ylab(NULL) + theme_base() + labs(title = 'Police officers in England and Wales')
 ggsave(filename = "/Users/matteo/Downloads/Figure_5.png", device='png',
        dpi = 300, bg = "transparent",
