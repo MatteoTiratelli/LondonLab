@@ -1,3 +1,4 @@
+
 library(tidyverse)
 library(viridis)
 
@@ -49,6 +50,8 @@ LondonPop <- LondonPop[LondonPop$`Area Code` %in% c('UKI1', 'UKI2', 'H'),]
 names(LondonPop) <- gsub('Persons-', '', names(LondonPop))
 LondonPop$`Area Code` <- NULL
 
+LondonPop$`2021` <- c(3404300, 5395500,8799800)
+
 LondonPop <- pivot_longer(LondonPop, -'Area Name')
 LondonPop$name <- as.numeric(LondonPop$name)
 
@@ -58,7 +61,7 @@ LondonPop$name <- as.numeric(LondonPop$name)
 
 ggplot(LondonPop, aes(x = name, y = value, colour = `Area Name`)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'The population of London, 1800 - 2011', caption = 'Source: UK Census Data, accessed through https://data.london.gov.uk') +
+  labs(title = 'The population of London, 1800 - 2021', caption = 'Source: UK Census Data, accessed through https://data.london.gov.uk') +
   scale_y_continuous(labels = scales::comma) +
   theme_base() +
   theme(legend.position = "bottom", legend.title = element_blank())
@@ -66,12 +69,12 @@ ggplot(LondonPop, aes(x = name, y = value, colour = `Area Name`)) +
 
 #######################
 
-ForeignBorn <- tibble(Year = c(1851, 1881, 1911, 1951, 1981, 1991, 2001, 2011),
-                      count = c(9.558497847, 7.427176726, 10.412179132, 8, 24, 27, 27, 36))
+ForeignBorn <- tibble(Year = c(1851, 1881, 1911, 1951, 1981, 1991, 2001, 2011, 2021),
+                      count = c(9.558497847, 7.427176726, 10.412179132, 8, 24, 27, 27, 36, 37))
 
 ggplot(ForeignBorn, aes(x = Year, y = count)) +
   geom_line() + xlab(NULL) + ylab(NULL) +
-  labs(title = 'Percentage of Londoners who were born outside of Britain, 1851 - 2011', caption = 'Source: UK Census Data, accessed through I-CeM') +
+  labs(title = 'Percentage of Londoners who were born outside of Britain, 1851 - 2021', caption = 'Source: UK Census Data, accessed through I-CeM') +
   scale_y_continuous(limits = c(0,50), breaks = c(10,20,30,40,50), labels = c('10%','20%','30%', '40%', '50%')) +
   theme_base()
 
@@ -101,7 +104,7 @@ ggplot(HomicideRates, aes(x = reorder(City, Order), y = Rate)) +
   scale_y_continuous(breaks = c(0,5,10,15,20,25,30)) +
   labs(title = 'Homicide rates per 100,000 people') +
   theme_base()
-  
+
 #######################
 
 data <- read_csv("https://raw.githubusercontent.com/MatteoTiratelli/LondonLab/main/London%20Lab/CCTV.csv")
@@ -149,7 +152,7 @@ ggplot(datab, aes(x = reorder(City, CCTVperperson), y = CCTVperperson)) +
 #######################
 
 PoliceUSA1 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other', 'Violent crime'),
-                        value = c(37,15,15,14,10,6,4))
+                     value = c(37,15,15,14,10,6,4))
 PoliceUSA1$place <- 'New Orleans'
 PoliceUSA2 <- tibble(category = c('Responding to noncriminal calls','Traffic','Other crime','Property crime','Proactive','Medical or other','Violent crime'),
                      value = c(38,13,19,12,7,8,4))
@@ -169,8 +172,8 @@ ggplot(PoliceUSA, aes(fill = category, x = place, y = value)) +
   theme(legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5))
 ggsave(filename = "/Users/matteo/Downloads/Figure_1.png", device='png',
-         dpi = 300, bg = "transparent",
-         width=6, height=3)
+       dpi = 300, bg = "transparent",
+       width=6, height=3)
 
 PoliceUK <- tibble(category = c('Community work', 'Dealing with incidents','Post incident work','Admin','Travel','Other activities','Briefing/meetings','Custody'),
                    value = c(20,18,6,27,9,9,5,3))
@@ -186,11 +189,11 @@ ggplot(PoliceUK, aes(fill = category, x = place, y = value)) +
   theme(legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5))
 ggsave(filename = "/Users/matteo/Downloads/Figure_2.png", device='png',
-         dpi = 300, bg = "transparent",
-         width=4, height=3)
+       dpi = 300, bg = "transparent",
+       width=4, height=3)
 
 PoliceAA1 <- tibble(category = c('Reducing crime','Investigating crime','Promoting public security','Providing assistance'),
-                   value = c(7,44,25,24))
+                    value = c(7,44,25,24))
 PoliceAA1$place <- 'Merseyside'
 PoliceAA2 <- tibble(category = c('Reducing crime','Investigating crime','Promoting public security','Providing assistance'),
                     value = c(5,49,16,30))
@@ -210,8 +213,8 @@ ggplot(PoliceAA, aes(fill = category, x = place, y = value)) +
   theme(legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5))
 ggsave(filename = "/Users/matteo/Downloads/Figure_3.png", device='png',
-         dpi = 300, bg = "transparent",
-         width=6, height=3)
+       dpi = 300, bg = "transparent",
+       width=6, height=3)
 
 
 ################
@@ -225,7 +228,7 @@ ggplot(Prisons, aes(x = Year, y = Total)) +
 ggsave(filename = "/Users/matteo/Downloads/Figure_4.png", device='png',
        dpi = 300, bg = "transparent",
        width=6, height=3)
-  
+
 ggplot(Prisons[!is.na(Prisons$Per100000),], aes(x = Year, y = Per100000)) +
   geom_line(colour = 'blue') +
   scale_x_continuous(limits = c(1900,2020), breaks = seq(1900,2020,20)) +
